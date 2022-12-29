@@ -8,6 +8,7 @@ import Sandwiches from "./sandwiches/sandwiches";
 import OrderCart from "./order/orderCart";
 import Orders from "./order/orders";
 import {Navbar} from "./components/navbar";
+import {Home} from "./landing/home";
 
 export const App = () => (
     <Provider store={store}>
@@ -16,7 +17,8 @@ export const App = () => (
 
                 <Container style={{paddingBottom: 100}} maxW='container.lg'>
                     <Routes>
-                        <Route path="/" element={<Login/>}/>
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/login" element={<Login/>}/>
                         <Route path="/sandwiches" element={<Sandwiches/>}/>
                         <Route path="/cart" element={<OrderCart/>}/>
                         <Route path="/orders" element={<Orders/>}/>
