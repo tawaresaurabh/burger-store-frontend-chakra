@@ -21,9 +21,9 @@ import {
 } from '@chakra-ui/react'
 import * as React from 'react'
 import {FiMenu} from 'react-icons/fi'
-import {AiOutlineLogout, AiOutlineShoppingCart} from "react-icons/all";
+import {AiOutlineHome, AiOutlineLogout, AiOutlineShoppingCart} from "react-icons/all";
 import {useItemCount} from "../order/orderHooks";
-import {useAppDispatch, useAppSelector} from "../configuration/hooks";
+import {useAppDispatch} from "../configuration/hooks";
 import {logout} from "../login/loginSlice";
 import {useNavigate} from "react-router-dom";
 
@@ -37,8 +37,6 @@ const NavLink = ({ text }: NavLinkProps) => (
 
 export const Navbar = () => {
     const itemCount = useItemCount()
-    const user = useAppSelector(state => state.loginState.user)
-    const token = useAppSelector(state => state.loginState.token)
     const { isOpen, onOpen, onClose } = useDisclosure();
     const isDesktop = useBreakpointValue({ base: false, lg: true })
     const dispatch = useAppDispatch();
@@ -55,7 +53,9 @@ export const Navbar = () => {
                             <Flex justify="flex-start" flex="1">
                                 <ButtonGroup variant="link" spacing="8">
 
+                                    <Button leftIcon={<AiOutlineHome size={25}/>} colorScheme='teal' variant='solid' borderRadius={"full"} onClick={() => navigate("/")}>
 
+                                    </Button>
 
                                 </ButtonGroup>
                             </Flex>
@@ -88,6 +88,7 @@ export const Navbar = () => {
                                             <Button colorScheme='red' mr={3} onClick={() => {
                                                 onClose();
                                                 dispatch(logout());
+                                                navigate("/",{ replace: true })
                                             }}>
                                                 Logout
                                             </Button>

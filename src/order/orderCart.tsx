@@ -64,6 +64,7 @@ const OrderCart = () => {
                         <StatNumber>{itemCount}</StatNumber>
                     </Stat>
                 </StatGroup>
+                <Button colorScheme={"teal"}  disabled={itemCount === 0} onClick={handlePlaceOrder} > Confirm Order</Button>
 
                 {
                     sandwichIdCountMap.map((sandwichIdCount) => {

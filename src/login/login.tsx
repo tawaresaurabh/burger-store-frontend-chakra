@@ -6,7 +6,7 @@ import {loginFormSchema} from "./loginFormSchema";
 
 import {doLogin} from "./loginSlice";
 import {LoginRequestObject} from "./loginInterfaces";
-import {Navigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {Alert, Box, Button, Container, FormControl, FormErrorMessage, FormLabel, HStack, Image, Input, Spinner, StackDivider, VStack} from "@chakra-ui/react";
 
 
@@ -18,16 +18,14 @@ const Login = () => {
     const dispatch = useAppDispatch()
     const loginError = useAppSelector(state => state.loginState.error);
     const isLoading = useAppSelector(state => state.loginState.loading);
-    const token = useAppSelector(state => state.loginState.token);
+    const navigate = useNavigate();
 
 
     const handleSubmit = async (values: LoginRequestObject)=> {
-        dispatch(doLogin(values))
+        dispatch(doLogin(values)).then(() => navigate("/sandwiches" , { replace: true }));
     }
 
-    if(token){
-       return <Navigate replace to="/sandwiches" />
-    }else {
+
         return (
             <Container >
                 {isLoading && <Spinner/>}
@@ -95,7 +93,7 @@ const Login = () => {
 
                 </Container >
         );
-    }
+
 
 }
 
