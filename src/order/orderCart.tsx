@@ -3,12 +3,13 @@ import {useAppDispatch, useAppSelector} from "../configuration/hooks";
 import {orderCartActions, placeOrder} from "./orderCartSlice";
 import {useGetSandwiches, useGetSandwichIdCountMap, useItemCount, useOrderTotal} from "./orderHooks";
 import {
+    Alert,
+    AlertIcon,
     Button,
     Card,
     CardBody,
     CardFooter,
-    CloseButton,
-    Container,
+    Divider,
     Heading,
     HStack,
     Image,
@@ -17,8 +18,11 @@ import {
     StatGroup,
     StatLabel,
     StatNumber,
-    Text
+    Text,
+    useToast,
+    VStack
 } from "@chakra-ui/react";
+import {AiOutlineDelete} from "react-icons/all";
 
 
 const OrderCart = () => {
@@ -27,10 +31,12 @@ const OrderCart = () => {
 
     const token = useAppSelector(state => state.loginState.token);
     const userId = useAppSelector(state => state.loginState.user._id);
+    const orderPlaceError = useAppSelector(state => state.orderCartState.error)
     const sandwiches = useGetSandwiches();
 
     const itemCount = useItemCount();
     const orderTotal = useOrderTotal();
+    const toast = useToast();
 
 
     function handlePlaceOrder() {
@@ -50,13 +56,23 @@ const OrderCart = () => {
     }
 
     return (
+        <VStack spacing={5}>
 
-        <Container>
+            {orderPlaceError && <Alert status='error' variant='left-accent'>
+                <AlertIcon />
+                {orderPlaceError}
+            </Alert>}
+
+            <Text fontSize='xl'>
+                Order Cart
+                <Divider orientation='horizontal' borderColor='gray.700'/>
+            </Text>
+
             <Stack spacing='4'>
                 <StatGroup>
                     <Stat>
                         <StatLabel>Order total</StatLabel>
-                        <StatNumber>$ {orderTotal}</StatNumber>
+                        <StatNumber>${orderTotal}</StatNumber>
                     </Stat>
 
                     <Stat>
@@ -64,6 +80,7 @@ const OrderCart = () => {
                         <StatNumber>{itemCount}</StatNumber>
                     </Stat>
                 </StatGroup>
+
                 <Button colorScheme={"teal"}  disabled={itemCount === 0} onClick={handlePlaceOrder} > Confirm Order</Button>
 
                 {
@@ -74,69 +91,77 @@ const OrderCart = () => {
                         .map(selectedSandwichCount => {
 
                                 return (
+                                    <Card
+                                        direction={{ base: 'column', sm: 'row' }}
+                                        overflow='hidden'
+                                        variant='outline'
+                                        key={selectedSandwichCount._id}
+                                    >
+                                        <Image
+                                            objectFit='cover'
+                                            maxW={{ base: '100%', sm: '200px' }}
+                                            src={selectedSandwichCount.imageUrl}
+                                            alt={selectedSandwichCount.name}
+                                        />
+
+                                            <Stack>
+                                                <CardBody>
+                                                    <Heading size='md'>{selectedSandwichCount.name}</Heading>
+                                                    <Text py='2'>
+                                                        {selectedSandwichCount.description}
+                                                    </Text>
+
+                                                </CardBody>
+
+                                                <CardFooter>
 
 
-                            <Card
-                                direction={{ base: 'column', sm: 'row' }}
-                                overflow='hidden'
-                                variant='outline'
-                                key={selectedSandwichCount._id}
-                            >
-                                <Image
-                                    objectFit='cover'
-                                    maxW={{ base: '100%', sm: '200px' }}
-                                    src={selectedSandwichCount.imageUrl}
-                                    alt='Caffe Latte'
-                                />
+                                                    <HStack spacing='3'>
+                                                        <Button colorScheme={"red"}   onClick={()=>dispatch(orderCartActions.decrementCount(selectedSandwichCount._id!))} disabled={selectedSandwichCount.count === 0} > - </Button>
+                                                        <Text>{selectedSandwichCount.count}</Text>
+                                                        <Button colorScheme={"green"}   onClick={()=>dispatch(orderCartActions.incrementCount(selectedSandwichCount._id!))}  > + </Button>
 
-                                <Stack>
-                                    <CardBody>
-                                        <HStack spacing={2}>
-                                            <Heading size='md'>{selectedSandwichCount.name}</Heading>
-                                            <CloseButton bg={'red.500'} onClick={()=>dispatch(orderCartActions.removeFromCart(selectedSandwichCount._id!))}/>
-                                        </HStack>
+                                                        <Button leftIcon={<AiOutlineDelete size={25}/>} colorScheme='red' variant='solid'  onClick={()=>{
+                                                            dispatch(orderCartActions.removeFromCart(selectedSandwichCount._id!))
+                                                            toast({
+                                                                title: `${selectedSandwichCount.name} removed from the cart`,
+                                                                position: 'top-right',
+                                                                isClosable: true,
+                                                                status: 'warning',
+                                                            })
+                                                        }
+                                                        }/>
+                                                    </HStack>
 
 
-                                        <Text py='2'>
-                                            {selectedSandwichCount.description}
-                                        </Text>
-
-                                    </CardBody>
-
-                                    <CardFooter>
-
-
-                                        <HStack spacing='3'>
-                                            <Button colorScheme={"red"}   onClick={()=>dispatch(orderCartActions.decrementCount(selectedSandwichCount._id!))} disabled={selectedSandwichCount.count === 0} > - </Button>
-                                            <Text>{selectedSandwichCount.count}</Text>
-                                            <Button colorScheme={"green"}   onClick={()=>dispatch(orderCartActions.incrementCount(selectedSandwichCount._id!))}  > + </Button>
-                                        </HStack>
-
-
-                                    </CardFooter>
-                                </Stack>
-                            </Card>
+                                                </CardFooter>
+                                            </Stack>
+                                    </Card>
                                 )
                             }
                         )
                 }
 
+                {
+                    sandwichIdCountMap.length > 2 &&
+                    <>
+                        <StatGroup>
+                            <Stat>
+                                <StatLabel>Order total</StatLabel>
+                                <StatNumber>${orderTotal}</StatNumber>
+                            </Stat>
 
+                            <Stat>
+                                <StatLabel>Total items</StatLabel>
+                                <StatNumber>{itemCount}</StatNumber>
+                            </Stat>
+                        </StatGroup>
+                        <Button colorScheme={"teal"}  disabled={itemCount === 0} onClick={handlePlaceOrder} > Confirm Order</Button>
+                    </>
 
-
-
-
-
-                <Button colorScheme={"teal"}  disabled={itemCount === 0} onClick={handlePlaceOrder} > Confirm Order</Button>
-
-
+                }
             </Stack>
-
-
-
-
-
-        </Container>
+        </VStack>
 
     )
 

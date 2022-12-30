@@ -107,7 +107,6 @@ const orderCartSlice = createSlice({
         builder
             .addCase(placeOrder.pending, (state, action) => {
                 state.loading = true;
-                state.error = "";
             })
             .addCase(placeOrder.fulfilled, (state, action) => {
                 state.loading = false;

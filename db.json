@@ -2,20 +2,20 @@
   "sandwich": [
     {
       "_id" : "1",
-      "name": "cheese-sandwich",
+      "name": "Classic grilled",
       "toppings": [
         {
           "name": "cheese"
         }
       ],
       "description": "Cheese Sandwich is a delightful treat.",
-      "imageUrl": "https://images.pexels.com/photos/6529599/pexels-photo-6529599.jpeg?auto=compress&cs=tinysrgb&h=150",
+      "imageUrl": "https://images.pexels.com/photos/2983102/pexels-photo-2983102.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "white bread",
       "price": 5
     },
     {
       "_id" : "2",
-      "name": "cheese-ham-sandwich",
+      "name": "The Submarine",
       "toppings": [
         {
           "name": "cheese"
@@ -31,7 +31,7 @@
     },
     {
       "_id" : "3",
-      "name": "mac-grilled-cheese-sandwich",
+      "name": "The Quickie",
       "toppings": [
         {
           "name": "Mac"
@@ -47,7 +47,7 @@
     },
     {
       "_id" : "4",
-      "name": "veg-cheese-sandwich",
+      "name": "The Rustic",
       "toppings": [
         {
           "name": "carrot"
@@ -56,14 +56,14 @@
           "name": "cheese"
         }
       ],
-      "description": "Made with mixed veggies and cheese",
+      "description": "Traditional burger with sweet potato fries",
       "imageUrl": "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
       "price": 12
     },
     {
       "_id" : "5",
-      "name": "tomato-cheese-sandwich",
+      "name": "Veggie hero",
       "toppings": [
         {
           "name": "tomato"
@@ -72,14 +72,14 @@
           "name": "cheese"
         }
       ],
-      "description": "Grilled tomato cheese sandwich made on a griddle.",
+      "description": "Pita bread with cottage cheese, lettuce and baby tomatoes",
       "imageUrl": "https://images.pexels.com/photos/3026182/pexels-photo-3026182.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
-      "price": 15
+      "price": 10
     },
     {
       "_id" : "6",
-      "name": "tomato-cheese-sandwich",
+      "name": "Crispy chicken",
       "toppings": [
         {
           "name": "tomato"
@@ -88,14 +88,14 @@
           "name": "cheese"
         }
       ],
-      "description": "Grilled tomato cheese sandwich made on a griddle.",
+      "description": "Crunchy outside, tender inside",
       "imageUrl": "https://images.pexels.com/photos/2874990/pexels-photo-2874990.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
-      "price": 15
+      "price": 7
     },
     {
       "_id" : "7",
-      "name": "tomato-cheese-sandwich",
+      "name": "The good guy",
       "toppings": [
         {
           "name": "tomato"
@@ -104,14 +104,14 @@
           "name": "cheese"
         }
       ],
-      "description": "Grilled tomato cheese sandwich made on a griddle.",
+      "description": "Simple, quick and cheap",
       "imageUrl": "https://images.pexels.com/photos/2267538/pexels-photo-2267538.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
-      "price": 15
+      "price": 5
     },
     {
       "_id" : "8",
-      "name": "tomato-cheese-sandwich",
+      "name": "Oh my overload!",
       "toppings": [
         {
           "name": "tomato"
@@ -120,58 +120,58 @@
           "name": "cheese"
         }
       ],
-      "description": "Grilled tomato cheese sandwich made on a griddle.",
+      "description": "Overload of meat, beacon and cheese",
       "imageUrl": "https://images.pexels.com/photos/2983098/pexels-photo-2983098.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
-      "price": 15
+      "price": 25
     },
     {
       "_id" : "9",
-      "name": "tomato-cheese-sandwich",
+      "name": "The Popeye",
       "toppings": [
         {
-          "name": "tomato"
+          "name": "spinach"
         },
         {
           "name": "cheese"
         }
       ],
-      "description": "Grilled tomato cheese sandwich made on a griddle.",
+      "description": "Spinach sandwich dipped in 3 different cheese",
       "imageUrl": "https://images.pexels.com/photos/1885578/pexels-photo-1885578.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
       "price": 15
     },
     {
       "_id" : "10",
-      "name": "tomato-cheese-sandwich",
+      "name": "Classic hamburger and fries",
       "toppings": [
         {
-          "name": "tomato"
+          "name": "beef"
         },
         {
           "name": "cheese"
         }
       ],
-      "description": "Grilled tomato cheese sandwich made on a griddle.",
+      "description": "Classic beef patty with cheddar cheese and fries on the sides",
       "imageUrl": "https://images.pexels.com/photos/551991/pexels-photo-551991.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
       "price": 15
     },
     {
       "_id" : "11",
-      "name": "tomato-cheese-sandwich",
+      "name": "Basil and Avocado sandwich",
       "toppings": [
         {
-          "name": "tomato"
+          "name": "Spinach"
         },
         {
           "name": "cheese"
         }
       ],
-      "description": "Grilled tomato cheese sandwich made on a griddle.",
+      "description": "Fresh basil with avocado spread on toast",
       "imageUrl": "https://images.pexels.com/photos/1351238/pexels-photo-1351238.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
-      "price": 15
+      "price": 10
     }
 
   ],
