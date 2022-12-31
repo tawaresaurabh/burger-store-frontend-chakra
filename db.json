@@ -1,7 +1,7 @@
 {
   "sandwich": [
     {
-      "_id" : "1",
+      "_id": "1",
       "name": "Classic grilled",
       "toppings": [
         {
@@ -14,7 +14,7 @@
       "price": 5
     },
     {
-      "_id" : "2",
+      "_id": "2",
       "name": "The Submarine",
       "toppings": [
         {
@@ -30,7 +30,7 @@
       "price": 7
     },
     {
-      "_id" : "3",
+      "_id": "3",
       "name": "The Quickie",
       "toppings": [
         {
@@ -46,7 +46,7 @@
       "price": 10
     },
     {
-      "_id" : "4",
+      "_id": "4",
       "name": "The Rustic",
       "toppings": [
         {
@@ -62,7 +62,7 @@
       "price": 12
     },
     {
-      "_id" : "5",
+      "_id": "5",
       "name": "Veggie hero",
       "toppings": [
         {
@@ -78,7 +78,7 @@
       "price": 10
     },
     {
-      "_id" : "6",
+      "_id": "6",
       "name": "Crispy chicken",
       "toppings": [
         {
@@ -94,7 +94,7 @@
       "price": 7
     },
     {
-      "_id" : "7",
+      "_id": "7",
       "name": "The good guy",
       "toppings": [
         {
@@ -110,7 +110,7 @@
       "price": 5
     },
     {
-      "_id" : "8",
+      "_id": "8",
       "name": "Oh my overload!",
       "toppings": [
         {
@@ -126,7 +126,7 @@
       "price": 25
     },
     {
-      "_id" : "9",
+      "_id": "9",
       "name": "The Popeye",
       "toppings": [
         {
@@ -142,7 +142,7 @@
       "price": 15
     },
     {
-      "_id" : "10",
+      "_id": "10",
       "name": "Classic hamburger and fries",
       "toppings": [
         {
@@ -158,7 +158,7 @@
       "price": 15
     },
     {
-      "_id" : "11",
+      "_id": "11",
       "name": "Basil and Avocado sandwich",
       "toppings": [
         {
@@ -173,7 +173,6 @@
       "breadType": "oat",
       "price": 10
     }
-
   ],
   "auth": {
     "token": "SOME_LONG_TOKEN_1",
@@ -187,29 +186,78 @@
     {
       "_id": "1",
       "userId": "customer1_id",
-      "sandwichIds": ["1","3","5"],
+      "sandwichIds": [
+        "1",
+        "3",
+        "5"
+      ],
       "status": "ordered"
     },
     {
       "_id": "2",
       "userId": "customer1_id",
-      "sandwichIds": ["1","2","3"],
+      "sandwichIds": [
+        "1",
+        "2",
+        "3"
+      ],
       "status": "ready"
     },
     {
       "_id": "3",
       "userId": "customer1_id",
-      "sandwichIds": ["2","4","5"],
+      "sandwichIds": [
+        "2",
+        "4",
+        "5"
+      ],
       "status": "inQueue"
     },
     {
       "_id": "4",
       "userId": "customer1_id",
-      "sandwichIds": ["1","3","5","4"],
+      "sandwichIds": [
+        "1",
+        "3",
+        "5",
+        "4"
+      ],
       "status": "received"
+    },
+    {
+      "_id": "5",
+      "userId": "customer1_id",
+      "status": "ordered",
+      "sandwichIds": [
+        "3",
+        "2"
+      ]
+    },
+    {
+      "userId": "customer1_id",
+      "status": "ordered",
+      "sandwichIds": [
+        "2"
+      ],
+      "_id": "iVR3nw4"
+    },
+    {
+      "userId": "customer1_id",
+      "status": "ordered",
+      "sandwichIds": [
+        "7",
+        "8"
+      ],
+      "_id": "ifUqGJs"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "1"
+      ],
+      "status": "ordered",
+      "_id": "p0hJFnR"
     }
-
   ]
-
-
 }

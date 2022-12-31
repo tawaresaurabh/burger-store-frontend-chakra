@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAppDispatch, useAppSelector} from "../configuration/hooks";
 import {orderCartActions, placeOrder} from "./orderCartSlice";
-import {useGetSandwiches, useGetSandwichIdCountMap, useItemCount, useOrderTotal} from "./orderHooks";
+import {useGetSandwiches, useGetSandwichIdCountMap, useItemCount, useOrderCartTotal} from "./orderHooks";
 import {
     Alert,
     AlertIcon,
@@ -35,7 +35,7 @@ const OrderCart = () => {
     const sandwiches = useGetSandwiches();
 
     const itemCount = useItemCount();
-    const orderTotal = useOrderTotal();
+    const orderTotal = useOrderCartTotal();
     const toast = useToast();
 
 

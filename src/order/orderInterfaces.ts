@@ -1,16 +1,14 @@
-import {Sandwich} from "../sandwiches/sandwichInterfaces";
-
-export interface Order{
+export interface Order {
     userId: string,
     sandwichIds: string[],
     status: string
 }
 
-export interface OrderRequest extends Order{
+export interface OrderRequest extends Order {
     token: string;
 }
 
-export interface OrderResponse extends Order{
+export interface OrderResponse extends Order {
     _id: string;
 }
 
@@ -23,6 +21,13 @@ export interface OrderCartState {
 
 }
 
+export interface OrdersState {
+    error: string | any,
+    loading: boolean,
+    orders: Order[],
+    userId: string,
+}
+
 export interface SandwichId{
     sandwichId:string
 }
@@ -32,6 +37,3 @@ export interface SandwichIdCountMap{
     count: number
 }
 
-export interface SandwichCount extends  Sandwich{
-    count: number
-}

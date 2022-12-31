@@ -14,7 +14,7 @@ export const  useItemCount= () => {
     return itemCount;
 }
 
-export const  useOrderTotal= () => {
+export const  useOrderCartTotal= () => {
     const sandwichIdCountMap = useGetSandwichIdCountMap();
     const sandwiches = useGetSandwiches();
     const selectedSandwichesCount = sandwichIdCountMap.map((sandwichIdCount) => {
@@ -33,10 +33,17 @@ export const  useOrderTotal= () => {
 }
 
 
+
+
+
 export const useGetSandwiches = () => {
     return useAppSelector(state => state.sandwichState.sandwiches);
 }
 
 export const useGetSandwichIdCountMap = () => {
     return useAppSelector(state => state.orderCartState.sandwichIdCountMap);
+}
+
+export const useGetOrders = () => {
+    return useAppSelector(state => state.ordersState.orders);
 }

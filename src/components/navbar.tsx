@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react'
 import * as React from 'react'
 import {FiMenu} from 'react-icons/fi'
-import {AiOutlineHome, AiOutlineLogout, AiOutlineShoppingCart} from "react-icons/all";
+import {AiOutlineHome, AiOutlineLogout, AiOutlineOrderedList, AiOutlineShoppingCart} from "react-icons/all";
 import {useItemCount} from "../order/orderHooks";
 import {useAppDispatch} from "../configuration/hooks";
 import {logout} from "../login/loginSlice";
@@ -58,6 +58,13 @@ export const Navbar = () => {
 
                                         <Button leftIcon={<AiOutlineHome size={20}/>} colorScheme='teal' variant='solid' borderRadius={"full"}
                                                 onClick={() => navigate("/")}>
+                                            Home
+
+                                        </Button>
+
+                                        <Button leftIcon={<AiOutlineOrderedList size={20}/>} colorScheme='teal' variant='solid' borderRadius={"full"}
+                                                onClick={() => navigate("/orders")}>
+                                            Orders
 
                                         </Button>
 
