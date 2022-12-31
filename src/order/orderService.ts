@@ -3,7 +3,11 @@ import {OrderRequest} from "./orderInterfaces";
 
 
 export const doPlaceOrder = (orderRequest: OrderRequest) =>{
-     return  axiosForRequest(orderRequest.token).post("/order",orderRequest);
+     return  axiosForRequest(orderRequest.token).post("/order",{
+         userId: orderRequest.userId,
+         sandwichIds: orderRequest.sandwichIds,
+         status: orderRequest.status
+     });
 }
 
 export const getOrders = (token:string) =>{
