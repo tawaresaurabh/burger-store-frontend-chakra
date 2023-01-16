@@ -4,6 +4,7 @@ import Sandwiches from "../sandwiches/sandwiches";
 import OrderCart from "../order/orderCart";
 import Orders from "../order/orders";
 import * as React from "react";
+import {OrderDetail} from "../order/orderDetail";
 
 
 export const routes = (token : string) => [
@@ -18,9 +19,9 @@ export const routes = (token : string) => [
     },
     {
         path: '/sandwiches',
-        element: token ? <Sandwiches /> : <Navigate to="/" replace={true}/>,
         children: [
-            { path: '/sandwiches', element: <Sandwiches /> },
+            { index: true, element: token ? <Sandwiches /> : <Navigate to="/" replace={true}/> },
+            { path: ':id', element: <OrderDetail /> },
             // { path: '/cart', element: <OrderCart /> },
             // { path: '/orders', element: <Orders /> },
             // { path: '/', element: <Navigate to="/app/sandwiches" /> },
@@ -39,26 +40,14 @@ export const routes = (token : string) => [
         element: token ? <OrderCart /> : <Navigate to="/" replace={true}/>,
         children: [
 
-            { path: '/cart', element: <OrderCart /> },
-            // { path: '/orders', element: <Orders /> },
-            // { path: '/', element: <Navigate to="/app/sandwiches" /> },
-            // {
-            //     path: 'member',
-            //     element: <Outlet />,
-            //     children: [
-            //         { path: '/', element: <MemberGrid /> },
-            //         { path: '/add', element: <AddMember /> },
-            //     ],
-            // },
         ],
     },
     {
         path: '/orders',
-        element: token ? <Orders /> : <Navigate to="/" replace={true}/>,
         children: [
-            // { path: '/', element: <Sandwiches /> },
+            { index: true, element: token ? <Orders /> : <Navigate to="/" replace={true}/> },
             // { path: '/cart', element: <OrderCart /> },
-            { path: '/orders', element: <Orders /> },
+            { path: ':id', element: <OrderDetail /> },
             // { path: '/', element: <Navigate to="/app/sandwiches" /> },
             // {
             //     path: 'member',
@@ -70,6 +59,7 @@ export const routes = (token : string) => [
             // },
         ],
     },
+
 
 ];
 

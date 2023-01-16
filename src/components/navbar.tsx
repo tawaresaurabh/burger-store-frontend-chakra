@@ -27,6 +27,7 @@ import {useAppDispatch} from "../configuration/hooks";
 import {logout} from "../login/loginSlice";
 import {useNavigate} from "react-router-dom";
 import {useLogin} from "../login/loginHooks";
+import {ColorModeSwitcher} from "../ColorModeSwitcher";
 
 type NavLinkProps = { text: string };
 
@@ -47,7 +48,7 @@ export const Navbar = () => {
     return (
         // sx={{ position: '-webkit-sticky', /* Safari */ position: 'sticky', top: '0', }}
         <Box as="section" pb={{base: '6', md: '12'}} >
-            <Box as="nav" bg="gray.200" boxShadow={useColorModeValue('sm', 'sm-dark')}>
+            <Box as="nav" bg={useColorModeValue('gray.200', 'whiteAlpha.200')} boxShadow={useColorModeValue('gray.500', 'whiteAlpha.500')}>
                 <Container py={{base: '4', lg: '5'}}>
                     <HStack spacing="10">
                         {/*<AiOutlineShop size={25} color={'red'}/>*/}
@@ -82,6 +83,8 @@ export const Navbar = () => {
                                     <Button onClick={onOpen} leftIcon={<AiOutlineLogout size={20}/>} colorScheme='red' variant='solid'>
                                         Logout
                                     </Button>
+
+                                    <ColorModeSwitcher/>
                                 </HStack>
 
 

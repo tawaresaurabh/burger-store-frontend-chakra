@@ -26,7 +26,7 @@ const Login = () => {
 
 
     return (
-        <VStack spacing={5}>
+        <VStack spacing={5} py={20}>
             {isLoading && <Spinner/>}
 
             {loginError && <Alert status='error' variant='left-accent'>
@@ -65,7 +65,7 @@ const Login = () => {
                           }) => (
                             <Form noValidate onSubmit={handleSubmit}>
 
-                                <VStack spacing={3}>
+                                <VStack spacing={5}>
                                     <FormControl isInvalid={!!errors.username && touched.username}>
                                         <FormLabel>Username</FormLabel>
                                         <Input type='text' placeholder='Username' name='username' value={values.username} onChange={handleChange}/>

@@ -3,12 +3,7 @@
     {
       "_id": "1",
       "name": "Classic grilled",
-      "toppings": [
-        {
-          "name": "cheese"
-        }
-      ],
-      "description": "Cheese Sandwich is a delightful treat.",
+      "description": "The good , the known and the trustworthy",
       "imageUrl": "https://images.pexels.com/photos/2983102/pexels-photo-2983102.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "white bread",
       "price": 5
@@ -16,14 +11,6 @@
     {
       "_id": "2",
       "name": "The Submarine",
-      "toppings": [
-        {
-          "name": "cheese"
-        },
-        {
-          "name": "ham"
-        }
-      ],
       "description": "Delicious cheese & ham sandwich",
       "imageUrl": "https://images.pexels.com/photos/1603901/pexels-photo-1603901.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "sourdough bread",
@@ -32,14 +19,6 @@
     {
       "_id": "3",
       "name": "The Quickie",
-      "toppings": [
-        {
-          "name": "Mac"
-        },
-        {
-          "name": "cheese"
-        }
-      ],
       "description": "Best Grilled Cheese Sandwich",
       "imageUrl": "https://images.pexels.com/photos/2282532/pexels-photo-2282532.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "sourdough bread",
@@ -48,14 +27,6 @@
     {
       "_id": "4",
       "name": "The Rustic",
-      "toppings": [
-        {
-          "name": "carrot"
-        },
-        {
-          "name": "cheese"
-        }
-      ],
       "description": "Traditional burger with sweet potato fries",
       "imageUrl": "https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
@@ -64,14 +35,6 @@
     {
       "_id": "5",
       "name": "Veggie hero",
-      "toppings": [
-        {
-          "name": "tomato"
-        },
-        {
-          "name": "cheese"
-        }
-      ],
       "description": "Pita bread with cottage cheese, lettuce and baby tomatoes",
       "imageUrl": "https://images.pexels.com/photos/3026182/pexels-photo-3026182.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
@@ -80,14 +43,6 @@
     {
       "_id": "6",
       "name": "Crispy chicken",
-      "toppings": [
-        {
-          "name": "tomato"
-        },
-        {
-          "name": "cheese"
-        }
-      ],
       "description": "Crunchy outside, tender inside",
       "imageUrl": "https://images.pexels.com/photos/2874990/pexels-photo-2874990.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
@@ -96,14 +51,6 @@
     {
       "_id": "7",
       "name": "The good guy",
-      "toppings": [
-        {
-          "name": "tomato"
-        },
-        {
-          "name": "cheese"
-        }
-      ],
       "description": "Simple, quick and cheap",
       "imageUrl": "https://images.pexels.com/photos/2267538/pexels-photo-2267538.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
@@ -112,14 +59,6 @@
     {
       "_id": "8",
       "name": "Oh my overload!",
-      "toppings": [
-        {
-          "name": "tomato"
-        },
-        {
-          "name": "cheese"
-        }
-      ],
       "description": "Overload of meat, beacon and cheese",
       "imageUrl": "https://images.pexels.com/photos/2983098/pexels-photo-2983098.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
@@ -128,14 +67,6 @@
     {
       "_id": "9",
       "name": "The Popeye",
-      "toppings": [
-        {
-          "name": "spinach"
-        },
-        {
-          "name": "cheese"
-        }
-      ],
       "description": "Spinach sandwich dipped in 3 different cheese",
       "imageUrl": "https://images.pexels.com/photos/1885578/pexels-photo-1885578.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
@@ -144,14 +75,6 @@
     {
       "_id": "10",
       "name": "Classic hamburger and fries",
-      "toppings": [
-        {
-          "name": "beef"
-        },
-        {
-          "name": "cheese"
-        }
-      ],
       "description": "Classic beef patty with cheddar cheese and fries on the sides",
       "imageUrl": "https://images.pexels.com/photos/551991/pexels-photo-551991.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
@@ -160,14 +83,6 @@
     {
       "_id": "11",
       "name": "Basil and Avocado sandwich",
-      "toppings": [
-        {
-          "name": "Spinach"
-        },
-        {
-          "name": "cheese"
-        }
-      ],
       "description": "Fresh basil with avocado spread on toast",
       "imageUrl": "https://images.pexels.com/photos/1351238/pexels-photo-1351238.jpeg?auto=compress&cs=tinysrgb&h=150",
       "breadType": "oat",
@@ -258,6 +173,217 @@
       ],
       "status": "ordered",
       "_id": "p0hJFnR"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "1"
+      ],
+      "status": "ordered",
+      "_id": "3qNulTD"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "ApmqC1a"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2"
+      ],
+      "status": "ordered",
+      "_id": "kqrU1EA"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "ykycJoo"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "PNsvfRv"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "4N78g0f"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "sxW33YH"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2"
+      ],
+      "status": "ordered",
+      "_id": "4maL4G1"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "B5kDxHO"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "fb22-M3"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "BraIRP3"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "Xj1I7WH"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3",
+        "4"
+      ],
+      "status": "ordered",
+      "_id": "84cK3tt"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3",
+        "4"
+      ],
+      "status": "ordered",
+      "_id": "9gcLTQg"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "lO2Lnbf"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2"
+      ],
+      "status": "ordered",
+      "_id": "mXgChXT"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "3",
+        "2"
+      ],
+      "status": "ordered",
+      "_id": "rZS1ft6"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "OAEKzQC"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "WCqrWyz"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "spJaJid"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2"
+      ],
+      "status": "ordered",
+      "_id": "qYQN4Ef"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2",
+        "3"
+      ],
+      "status": "ordered",
+      "_id": "WDbZiL9"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2"
+      ],
+      "status": "ordered",
+      "_id": "6PFyfgO"
+    },
+    {
+      "userId": "customer1_id",
+      "sandwichIds": [
+        "2"
+      ],
+      "status": "ordered",
+      "_id": "P2LoplX"
     }
   ]
 }

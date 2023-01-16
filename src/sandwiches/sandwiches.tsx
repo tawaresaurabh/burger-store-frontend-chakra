@@ -56,7 +56,7 @@ const Sandwiches = () => {
 
             <SimpleGrid columns={4} spacingX='20px' spacingY='20px'>
                 {
-                    sandwiches.map((sandwich, index) => {
+                    sandwiches.map((sandwich) => {
                         return (
                             <Card variant={"outline"} width={"container.xs"} key={sandwich._id}>
                                 <CardBody>
@@ -81,7 +81,7 @@ const Sandwiches = () => {
                                 <Divider/>
                                 <CardFooter>
                                     <HStack spacing={5} align={"center"}>
-                                        <Text color='blackAlpha.900' fontSize='2xl'>{`$${sandwich.price}`}</Text>
+                                        <Text colorScheme={"blackAlpha"} fontSize='2xl'>{`$${sandwich.price}`}</Text>
                                         <Center height='50px'>
                                             <Divider orientation='vertical' borderColor='gray.400'/>
                                         </Center>

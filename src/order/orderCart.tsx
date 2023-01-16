@@ -39,7 +39,10 @@ const OrderCart = () => {
     const toast = useToast();
 
 
-    function handlePlaceOrder() {
+
+
+
+    const handlePlaceOrder = async () => {
         let orderIds: string[] = [];
         sandwichIdCountMap.forEach(sandwichIdCount => {
             for (let i = 0; i < sandwichIdCount.count; i++) {
@@ -53,6 +56,16 @@ const OrderCart = () => {
             token
         }
         dispatch(placeOrder(orderRequest))
+            .then(() => {
+            toast({
+                title: `Order placed, Please check view orders for progress`,
+                position: 'top-right',
+                isClosable: true,
+                status: 'success',
+            })
+        })
+
+
     }
 
     return (
@@ -65,50 +78,55 @@ const OrderCart = () => {
 
             <Text fontSize='xl'>
                 Order Cart
-                <Divider orientation='horizontal' borderColor='gray.700'/>
+                <Divider orientation='horizontal'/>
             </Text>
 
-            <Stack spacing='4'>
-                <StatGroup>
-                    <Stat>
-                        <StatLabel>Order total</StatLabel>
-                        <StatNumber>${orderTotal}</StatNumber>
-                    </Stat>
+            {sandwichIdCountMap.length > 0
+            &&
+                <Stack spacing='4'>
+                    <StatGroup>
+                        <Stat>
+                            <StatLabel>Order total</StatLabel>
+                            <StatNumber>${orderTotal}</StatNumber>
+                        </Stat>
 
-                    <Stat>
-                        <StatLabel>Total items</StatLabel>
-                        <StatNumber>{itemCount}</StatNumber>
-                    </Stat>
-                </StatGroup>
+                        <Stat>
+                            <StatLabel>Total items</StatLabel>
+                            <StatNumber>{itemCount}</StatNumber>
+                        </Stat>
+                    </StatGroup>
 
-                <Button colorScheme={"teal"}  disabled={itemCount === 0} onClick={handlePlaceOrder} > Confirm Order</Button>
+                    <Button colorScheme={"teal"}  onClick={handlePlaceOrder} > Confirm Order</Button>
 
-                {
-                    sandwichIdCountMap.map((sandwichIdCount) => {
-                        const selectedSandwich = sandwiches.find(sandwich => sandwich._id === sandwichIdCount.sandwichId)
-                        return {...selectedSandwich, count: sandwichIdCount.count}
-                    })
-                        .map(selectedSandwichCount => {
+                    {
+                        sandwichIdCountMap.map((sandwichIdCount) => {
+                            const selectedSandwich = sandwiches.find(sandwich => sandwich._id === sandwichIdCount.sandwichId)
+                            return {...selectedSandwich, count: sandwichIdCount.count}
+                        })
+                            .map(selectedSandwichCount => {
 
-                                return (
-                                    <Card
-                                        direction={{ base: 'column', sm: 'row' }}
-                                        overflow='hidden'
-                                        variant='outline'
-                                        key={selectedSandwichCount._id}
-                                    >
-                                        <Image
-                                            objectFit='cover'
-                                            maxW={{ base: '100%', sm: '200px' }}
-                                            src={selectedSandwichCount.imageUrl}
-                                            alt={selectedSandwichCount.name}
-                                        />
+                                    return (
+                                        <Card
+                                            direction={{ base: 'column', sm: 'row' }}
+                                            overflow='hidden'
+                                            variant='outline'
+                                            key={selectedSandwichCount._id}
+                                        >
+                                            <Image
+                                                objectFit='cover'
+                                                maxW={{ base: '100%', sm: '200px' }}
+                                                src={selectedSandwichCount.imageUrl}
+                                                alt={selectedSandwichCount.name}
+                                            />
 
                                             <Stack>
                                                 <CardBody>
                                                     <Heading size='md'>{selectedSandwichCount.name}</Heading>
                                                     <Text py='2'>
                                                         {selectedSandwichCount.description}
+                                                    </Text>
+                                                    <Text py='2'>
+                                                        Subtotal ${selectedSandwichCount.price! * selectedSandwichCount.count}
                                                     </Text>
 
                                                 </CardBody>
@@ -136,31 +154,39 @@ const OrderCart = () => {
 
                                                 </CardFooter>
                                             </Stack>
-                                    </Card>
-                                )
-                            }
-                        )
-                }
+                                        </Card>
+                                    )
+                                }
+                            )
+                    }
 
-                {
-                    sandwichIdCountMap.length > 2 &&
-                    <>
-                        <StatGroup>
-                            <Stat>
-                                <StatLabel>Order total</StatLabel>
-                                <StatNumber>${orderTotal}</StatNumber>
-                            </Stat>
+                    {
+                        sandwichIdCountMap.length > 2 &&
+                        <>
+                            <StatGroup>
+                                <Stat>
+                                    <StatLabel>Order total</StatLabel>
+                                    <StatNumber>${orderTotal}</StatNumber>
+                                </Stat>
 
-                            <Stat>
-                                <StatLabel>Total items</StatLabel>
-                                <StatNumber>{itemCount}</StatNumber>
-                            </Stat>
-                        </StatGroup>
-                        <Button colorScheme={"teal"}  disabled={itemCount === 0} onClick={handlePlaceOrder} > Confirm Order</Button>
-                    </>
+                                <Stat>
+                                    <StatLabel>Total items</StatLabel>
+                                    <StatNumber>{itemCount}</StatNumber>
+                                </Stat>
+                            </StatGroup>
+                            <Button colorScheme={"teal"}  onClick={handlePlaceOrder} > Confirm Order</Button>
+                        </>
+                    }
+                </Stack>
+            }
 
-                }
-            </Stack>
+            {
+                sandwichIdCountMap.length === 0
+                &&
+                <Text fontWeight={"light"}>
+                  There are no products in the cart, Please add from menu :)
+                </Text>
+            }
         </VStack>
 
     )
