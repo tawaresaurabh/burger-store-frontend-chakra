@@ -1,6 +1,6 @@
 
 export interface LoginState {
-    token: string,
+    authenticated: boolean,
     error: string | any,
     logoutModal: boolean,
     user: User
@@ -8,21 +8,22 @@ export interface LoginState {
 }
 
 
+
 export interface LoginRequestObject {
-    username: string;
+    email: string;
     password: string;
 }
 
 
 export interface LoginResponse {
-    token: string,
-    user: User
+    authenticated: boolean,
+    user?: User
 
 }
 
 interface User {
     _id: string,
     role: string,
-    username: string
+    email: string
 
 }

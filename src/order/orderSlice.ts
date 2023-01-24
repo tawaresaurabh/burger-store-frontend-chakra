@@ -15,9 +15,9 @@ export const initialStateOrdersSlice: OrdersState = {
 
 export const getAllOrders = createAsyncThunk(
     'orders/getAll',
-    async (token: string, { rejectWithValue }) => {
+    async (_, { rejectWithValue }) => {
         try {
-            const res = await getOrders(token);
+            const res = await getOrders();
             console.log(res)
             return res.data as Order[];
         } catch (err) {

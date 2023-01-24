@@ -1,4 +1,4 @@
-import {OrderCartState, OrderRequest, OrderResponse, SandwichId} from "./orderInterfaces";
+import {Order, OrderCartState, ProductId} from "./orderInterfaces";
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios, {AxiosError} from "axios";
 import {doPlaceOrder} from "./orderService";
@@ -8,18 +8,18 @@ import {logout} from "../login/loginSlice";
 export const initialStateOrderCartSlice: OrderCartState = {
     error: "",
     loading: false,
-    sandwichIdCountMap: [],
+    orderItems: [],
     orderId: ""
 
 }
 
 export const placeOrder = createAsyncThunk(
     'cart/placeOrder',
-    async (orderRequest: OrderRequest, { rejectWithValue }) => {
+    async (order: Order, { rejectWithValue }) => {
         try {
-            const res = await doPlaceOrder(orderRequest);
+            const res = await doPlaceOrder(order);
             console.log(res)
-            return res.data as OrderResponse;
+            return res.data as Order;
         } catch (err) {
             const errors = err as AxiosError;
             if(axios.isAxiosError(errors)){
@@ -37,67 +37,67 @@ const orderCartSlice = createSlice({
     initialState: initialStateOrderCartSlice,
     reducers: {
         addToCart: {
-            reducer: (state, action: PayloadAction<SandwichId>) => {
-                const isPresent = state.sandwichIdCountMap
-                    .find(sandwichIdCount => sandwichIdCount.sandwichId === action.payload.sandwichId);
+            reducer: (state, action: PayloadAction<ProductId>) => {
+                const isPresent = state.orderItems
+                    .find(orderItem => orderItem.productId === action.payload.productId);
                 if (isPresent) {
-                    state.sandwichIdCountMap = state.sandwichIdCountMap
-                        .map(sandwichIdCount => sandwichIdCount.sandwichId === action.payload.sandwichId ?
-                            ({...sandwichIdCount, count: sandwichIdCount.count + 1}) :
-                            sandwichIdCount
+                    state.orderItems = state.orderItems
+                        .map(orderItem => orderItem.productId === action.payload.productId ?
+                            ({...orderItem, count: orderItem.count + 1}) :
+                            orderItem
                         )
                 } else {
-                    state.sandwichIdCountMap.push({sandwichId: action.payload.sandwichId, count: 1})
+                    state.orderItems.push({productId: action.payload.productId, count: 1})
                 }
             },
-            prepare: (sandwichId: string) => {
+            prepare: (productId: string) => {
                 return {
                     payload: {
-                        sandwichId,
+                        productId,
                     },
                 }
             }
         },
         removeFromCart: {
-            reducer: (state, action: PayloadAction<SandwichId>) => {
-                state.sandwichIdCountMap = state.sandwichIdCountMap
-                    .filter(sandwichIdCount => sandwichIdCount.sandwichId !== action.payload.sandwichId);
+            reducer: (state, action: PayloadAction<ProductId>) => {
+                state.orderItems = state.orderItems
+                    .filter(orderItem => orderItem.productId !== action.payload.productId);
             },
-            prepare: (sandwichId: string) => {
+            prepare: (productId: string) => {
                 return {
                     payload: {
-                        sandwichId,
+                        productId,
                     },
                 }
             }
         },
         incrementCount: {
-            reducer: (state, action: PayloadAction<SandwichId>) => {
-                state.sandwichIdCountMap = state.sandwichIdCountMap
-                    .map(sandwichIdCount => sandwichIdCount.sandwichId === action.payload.sandwichId ?
-                        {...sandwichIdCount, count: sandwichIdCount.count + 1} :
-                        sandwichIdCount)
+            reducer: (state, action: PayloadAction<ProductId>) => {
+                state.orderItems = state.orderItems
+                    .map(orderItem => orderItem.productId === action.payload.productId ?
+                        {...orderItem, count: orderItem.count + 1} :
+                        orderItem)
             },
-            prepare: (sandwichId: string) => {
+            prepare: (productId: string) => {
                 return {
                     payload: {
-                        sandwichId,
+                        productId,
                     },
                 }
             }
         },
         decrementCount: {
-            reducer: (state, action: PayloadAction<SandwichId>) => {
-                state.sandwichIdCountMap = state.sandwichIdCountMap
-                    .map(sandwichIdCount => sandwichIdCount.sandwichId === action.payload.sandwichId ?
-                        {...sandwichIdCount, count: sandwichIdCount.count - 1} :
-                        sandwichIdCount)
+            reducer: (state, action: PayloadAction<ProductId>) => {
+                state.orderItems = state.orderItems
+                    .map(orderItem => orderItem.productId === action.payload.productId ?
+                        {...orderItem, count: orderItem.count - 1} :
+                        orderItem)
 
             },
-            prepare: (sandwichId: string) => {
+            prepare: (productId: string) => {
                 return {
                     payload: {
-                        sandwichId,
+                        productId,
                     },
                 }
             }
@@ -110,7 +110,7 @@ const orderCartSlice = createSlice({
             })
             .addCase(placeOrder.fulfilled, (state, action) => {
                 state.loading = false;
-                state.sandwichIdCountMap = [];
+                state.orderItems = [];
                 state.orderId = action.payload._id;
                 state.error = "";
             })

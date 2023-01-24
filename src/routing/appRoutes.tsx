@@ -5,8 +5,8 @@ import {routes} from "./routes";
 
 
 const AppRoutes = () => {
-    const token = useAppSelector((state) => state.loginState.token);
-    const routing = useRoutes(routes(token));
+    const authenticated = useAppSelector((state) => state.loginState.authenticated);
+    const routing = useRoutes(routes(authenticated));
     return(
         <>
             {routing}

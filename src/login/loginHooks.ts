@@ -1,5 +1,13 @@
 import {useAppSelector} from "../configuration/hooks";
 
-export const useLogin = () => {
-    return useAppSelector(state => state.loginState.token);
+
+export const useAuth = () => {
+    return useAppSelector(state => state.loginState.authenticated);
 }
+
+export const useAdmin = () => {
+    const role = useAppSelector(state => state.loginState.user.role);
+    return role === 'ADMIN';
+
+}
+

@@ -1,15 +1,14 @@
-export interface Sandwich {
+export interface Product {
     _id: string,
     name: string,
     description?: string,
     imageUrl?: string,
-    breadType: string,
     price: number,
 
 }
 
-export interface SandwichState {
-    sandwiches: Sandwich[]
+export interface ProductState {
+    products: Product[]
     loading: boolean,
     error: string | any,
 }

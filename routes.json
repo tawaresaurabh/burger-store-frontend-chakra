@@ -1,5 +1,5 @@
 {
-  "/api/sandwich": "/sandwich",
+  "/api/product": "/product",
   "/api/order": "/order",
   "/auth": "/auth"
 }

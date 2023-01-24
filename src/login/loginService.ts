@@ -1,7 +1,6 @@
-import  {axiosForLoginRequest} from "../http-common";
-import {LoginRequestObject} from "./loginInterfaces";
+import {axiosObject} from "../http-common";
 
 
-export const doLoginRequest = (loginObject: LoginRequestObject) =>{
-    return  axiosForLoginRequest(loginObject.username, loginObject.password);
+export const doLoginRequest = () =>{
+    return  axiosObject();
 }

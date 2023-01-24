@@ -7,6 +7,10 @@ import {
     HStack,
     IconButton,
     Link,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -21,13 +25,13 @@ import {
 } from '@chakra-ui/react'
 import * as React from 'react'
 import {FiMenu} from 'react-icons/fi'
-import {AiOutlineHome, AiOutlineLogout, AiOutlineOrderedList, AiOutlineShoppingCart} from "react-icons/all";
-import {useItemCount} from "../order/orderHooks";
+import {AiFillBook, AiOutlineHome, AiOutlineLogout, AiOutlineOrderedList, AiOutlineShoppingCart} from "react-icons/all";
 import {useAppDispatch} from "../configuration/hooks";
-import {logout} from "../login/loginSlice";
+import {doLogout, logout} from "../login/loginSlice";
 import {useNavigate} from "react-router-dom";
-import {useLogin} from "../login/loginHooks";
+import {useAdmin, useAuth} from "../login/loginHooks";
 import {ColorModeSwitcher} from "../ColorModeSwitcher";
+import {useOrderCart} from "../order/orderCartHook";
 
 type NavLinkProps = { text: string };
 
@@ -38,12 +42,14 @@ const NavLink = ({ text }: NavLinkProps) => (
 );
 
 export const Navbar = () => {
-    const itemCount = useItemCount()
+
+    const {itemCount} = useOrderCart();
     const {isOpen, onOpen, onClose} = useDisclosure();
     const isDesktop = useBreakpointValue({base: false, lg: true})
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const token = useLogin();
+    const isAuthenticated = useAuth();
+    const isAdmin = useAdmin();
 
     return (
         // sx={{ position: '-webkit-sticky', /* Safari */ position: 'sticky', top: '0', }}
@@ -53,7 +59,7 @@ export const Navbar = () => {
                     <HStack spacing="10">
                         {/*<AiOutlineShop size={25} color={'red'}/>*/}
                         {isDesktop ? (
-                            token && <>
+                            isAuthenticated && <>
                                 <Flex justify="flex-start" flex="1">
                                     <ButtonGroup variant="link" spacing="8">
 
@@ -63,11 +69,21 @@ export const Navbar = () => {
 
                                         </Button>
 
-                                        <Button leftIcon={<AiOutlineOrderedList size={20}/>} colorScheme='teal' variant='solid' borderRadius={"full"}
+                                        <Button leftIcon={<AiFillBook size={20}/>} colorScheme='teal' variant='solid' borderRadius={"full"}
                                                 onClick={() => navigate("/orders")}>
                                             Orders
 
                                         </Button>
+
+                                        {
+                                            isAdmin
+                                            &&
+                                            <Button leftIcon={<AiOutlineOrderedList size={20}/>} colorScheme='teal' variant='solid' borderRadius={"full"}
+                                                    onClick={() => navigate("/products/new")}>
+                                                Add Product
+                                            </Button>
+
+                                        }
 
                                     </ButtonGroup>
                                 </Flex>
@@ -100,9 +116,9 @@ export const Navbar = () => {
                                         <ModalFooter>
                                             <Button variant='ghost' onClick={onClose}>Close</Button>
                                             <Button colorScheme='red' mr={3} onClick={() => {
+                                                dispatch(doLogout()).then(value => dispatch(logout()));
                                                 onClose();
-                                                dispatch(logout());
-                                                navigate("/", {replace: true})
+                                               // navigate("/", {replace: true})
                                             }}>
                                                 Logout
                                             </Button>
@@ -112,11 +128,43 @@ export const Navbar = () => {
 
                             </>
                         ) : (
-                            <IconButton
-                                variant="ghost"
-                                icon={<FiMenu fontSize="1.25rem"/>}
-                                aria-label="Open Menu"
-                            />
+
+                            <Menu>
+                                <MenuButton
+                                    as={IconButton}
+                                    aria-label='Options'
+                                    icon={<FiMenu />}
+                                    variant='outline'
+                                />
+                                <MenuList>
+                                    <MenuItem>
+                                        <Button leftIcon={<AiOutlineHome size={20}/>} colorScheme='teal' variant='solid' borderRadius={"full"}
+                                                onClick={() => navigate("/")}>
+                                            Home
+
+                                        </Button>
+                                    </MenuItem>
+                                    <MenuItem  >
+                                        <Button leftIcon={<AiOutlineOrderedList size={20}/>} colorScheme='teal' variant='solid' borderRadius={"full"}
+                                                onClick={() => navigate("/orders")}>
+                                            Orders
+
+                                        </Button>
+
+                                    </MenuItem>
+                                    <MenuItem>
+                                        <Button leftIcon={<AiOutlineShoppingCart size={20}/>} colorScheme='teal' variant='solid' borderRadius={"full"}
+                                                onClick={() => navigate("/cart")}>
+                                            {itemCount} items
+                                        </Button>
+                                    </MenuItem>
+                                    <MenuItem >
+                                        <Button onClick={onOpen} leftIcon={<AiOutlineLogout size={20}/>} colorScheme='red' variant='solid'>
+                                            Logout
+                                        </Button>
+                                    </MenuItem>
+                                </MenuList>
+                            </Menu>
                         )}
                     </HStack>
 

@@ -14,13 +14,15 @@ export const logout = createAction(ACTIONS.LOGOUT);
 export const showLogoutModal = createAction(ACTIONS.SHOW_LOGOUT_MODAL);
 export const hideLogoutModal = createAction(ACTIONS.HIDE_LOGOUT_MODAL);
 
+
+
 export const initialStateLoginSlice: LoginState = {
-    token: "",
+    authenticated: false,
     error: "",
     logoutModal: false,
     user:{
         _id : "",
-        username: "",
+        email: "",
         role: "",
     },
     loading: false,
@@ -31,7 +33,45 @@ export const doLogin = createAsyncThunk(
     'login/authenticate',
     async (loginObject: LoginRequestObject, { rejectWithValue }) => {
         try {
-            const res = await doLoginRequest(loginObject).get("/auth");
+            const res = await doLoginRequest().post("/auth", {
+                email: loginObject.email,
+                password: loginObject.password,
+            });
+            console.log(res)
+            return res.data as LoginResponse;
+        } catch (err) {
+            console.log(err)
+            const errors = err as AxiosError;
+            if(axios.isAxiosError(errors)){
+                return rejectWithValue(errors.message);
+            }
+            return rejectWithValue("Something went wrong, please contact dev")
+        }
+    }
+)
+
+export const doLogout = createAsyncThunk(
+    'login/logout',
+    async (_, { rejectWithValue }) => {
+        try {
+            const res = await doLoginRequest().post("/auth/logout");
+            console.log(res)
+            return res.data as LoginResponse;
+        } catch (err) {
+            const errors = err as AxiosError;
+            if(axios.isAxiosError(errors)){
+                return rejectWithValue(errors.message);
+            }
+            return rejectWithValue("Something went wrong, please contact dev")
+        }
+    }
+)
+
+export const getAuthState = createAsyncThunk(
+    'login/state',
+    async (_,{ rejectWithValue }) => {
+        try {
+            const res = await doLoginRequest().get("/auth");
             console.log(res)
             return res.data as LoginResponse;
         } catch (err) {
@@ -46,6 +86,8 @@ export const doLogin = createAsyncThunk(
 
 
 
+
+
 export const loginSlice = createSlice({
     name: 'login',
     initialState: initialStateLoginSlice,
@@ -53,16 +95,30 @@ export const loginSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(getAuthState.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(getAuthState.fulfilled, (state, action) => {
+                state.loading = false;
+                state.authenticated = action.payload.authenticated;
+                state.user.email = action.payload.user!.email;
+                state.user.role = action.payload.user!.role;
+                state.user._id = action.payload.user!._id
+                state.error = "";
+            })
+            .addCase(getAuthState.rejected, (state, action) => {
+                state.loading = false
+                state.authenticated = false
+            })
             .addCase(doLogin.pending, (state, action) => {
                 state.loading = true;
             })
             .addCase(doLogin.fulfilled, (state, action) => {
                 state.loading = false;
-                state.token = action.payload.token
-                localStorage.setItem("token",  state.token);
-                state.user.username = action.payload.user.username;
-                state.user.role = action.payload.user.role;
-                state.user._id = action.payload.user._id
+                state.authenticated = action.payload.authenticated
+                state.user.email = action.payload.user!.email;
+                state.user.role = action.payload.user!.role;
+                state.user._id = action.payload.user!._id
                 state.error = "";
             })
             .addCase(doLogin.rejected, (state, action) => {
@@ -76,7 +132,6 @@ export const loginSlice = createSlice({
                 state.logoutModal = false;
             })
             .addCase(logout, (state, action) => {
-                localStorage.removeItem("token");
                 return initialStateLoginSlice;
             })
     }

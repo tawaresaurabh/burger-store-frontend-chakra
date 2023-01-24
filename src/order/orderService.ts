@@ -1,15 +1,11 @@
-import {axiosForRequest} from "../http-common";
-import {OrderRequest} from "./orderInterfaces";
+import {axiosObject} from "../http-common";
+import {Order} from "./orderInterfaces";
 
 
-export const doPlaceOrder = (orderRequest: OrderRequest) =>{
-     return  axiosForRequest(orderRequest.token).post("/order",{
-         userId: orderRequest.userId,
-         sandwichIds: orderRequest.sandwichIds,
-         status: orderRequest.status
-     });
+export const doPlaceOrder = (order: Order) =>{
+     return  axiosObject().post("/order", order);
 }
 
-export const getOrders = (token:string) =>{
-    return  axiosForRequest(token).get("/order");
+export const getOrders = () =>{
+    return   axiosObject().get("/order");
 }

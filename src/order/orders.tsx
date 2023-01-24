@@ -1,22 +1,24 @@
 import React, {useEffect} from 'react';
-import {Alert, AlertIcon, Divider, Spinner, Table, TableCaption, Tbody, Td, Text, Tfoot, Th, Thead, Tr, VStack} from "@chakra-ui/react";
+import {Alert, AlertIcon, Button, Divider, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, VStack} from "@chakra-ui/react";
 import {useAppDispatch, useAppSelector} from "../configuration/hooks";
 import {getAllOrders} from "./orderSlice";
+import {useNavigate} from "react-router-dom";
+import {useAdmin} from "../login/loginHooks";
 
 
 const Orders = () => {
 
     const dispatch = useAppDispatch()
-    const token = useAppSelector(state => state.loginState.token);
-    const orders = useAppSelector(state => state.ordersState.orders)
+
+    const orders = useAppSelector(state => state.ordersState.orders);
     const isLoading = useAppSelector(state => state.ordersState.loading);
     const ordersError = useAppSelector(state => state.ordersState.error);
+    const isAdmin = useAdmin();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (token) {
-            dispatch(getAllOrders(token))
-        }
-    }, [dispatch, token])
+        dispatch(getAllOrders())
+    }, [dispatch])
 
 
     return (
@@ -29,45 +31,73 @@ const Orders = () => {
 
             <Text fontSize='xl'>
                 Orders
-                <Divider orientation='horizontal' borderColor='gray.700'/>
             </Text>
+            <Divider orientation='horizontal' borderColor='gray.700'/>
 
 
-
+            {
+                !isAdmin &&
                 <Table variant='striped'>
-                    <TableCaption>Imperial to metric conversion factors</TableCaption>
+                    {/*<TableCaption>Orders</TableCaption>*/}
                     <Thead>
                         <Tr>
-                            <Th>Id</Th>
-                            <Th>Customer</Th>
-                            <Th isNumeric>multiply by</Th>
+                            <Th>Order#</Th>
+                            <Th>Date</Th>
+                            <Th>Status</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
-                        <Tr>
-                            <Td>inches</Td>
-                            <Td>millimetres (mm)</Td>
-                            <Td isNumeric>25.4</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>feet</Td>
-                            <Td>centimetres (cm)</Td>
-                            <Td isNumeric>30.48</Td>
-                        </Tr>
-                        <Tr>
-                            <Td>yards</Td>
-                            <Td>metres (m)</Td>
-                            <Td isNumeric>0.91444</Td>
-                        </Tr>
+                        {orders.map((order) => {
+                            return (
+                                <Tr key={order._id}>
+                                    <Td><Button variant={"link"} colorScheme={"blue"} onClick={event => navigate(`/orders/${order._id}`)}>{order._id}</Button></Td>
+                                    {/*<Td>{order._id}</Td>*/}
+                                    <Td>{order.date?.toString()}</Td>
+                                    <Td>{order.status}</Td>
+                                </Tr>
+                            )
+                        })
+                        }
+
                     </Tbody>
-                    <Tfoot>
-                        <Tr>
-                            <Th>To convert</Th>
-                            <Th>into</Th>
-                            <Th isNumeric>multiply by</Th>
-                        </Tr>
-                    </Tfoot>
                 </Table>
+
+            }
+
+
+            {
+                isAdmin &&
+                <Table variant='striped'>
+                    {/*<TableCaption>Orders</TableCaption>*/}
+                    <Thead>
+                        <Tr>
+                            <Th>Order#</Th>
+                            <Th>Customer</Th>
+                            <Th>Date</Th>
+                            <Th>Status</Th>
+                        </Tr>
+                    </Thead>
+                    <Tbody>
+                        {orders.map((order) => {
+                            return (
+                                <Tr key={order._id}>
+                                    <Td><Button variant={"link"} colorScheme={"blue"} onClick={event => navigate(`/orders/${order._id}`)}>{order._id}</Button></Td>
+                                    <Td>{order.userId}</Td>
+                                    <Td>{order.date?.toString()}</Td>
+                                    <Td>{order.status}</Td>
+                                </Tr>
+                            )
+                        })
+                        }
+
+                    </Tbody>
+                </Table>
+
+            }
+
+
+
+
 
         </VStack>
     )

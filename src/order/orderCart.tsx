@@ -1,7 +1,7 @@
 import React from 'react';
 import {useAppDispatch, useAppSelector} from "../configuration/hooks";
 import {orderCartActions, placeOrder} from "./orderCartSlice";
-import {useGetSandwiches, useGetSandwichIdCountMap, useItemCount, useOrderCartTotal} from "./orderHooks";
+
 import {
     Alert,
     AlertIcon,
@@ -23,19 +23,17 @@ import {
     VStack
 } from "@chakra-ui/react";
 import {AiOutlineDelete} from "react-icons/all";
+import {useOrderCart} from "./orderCartHook";
 
 
 const OrderCart = () => {
     const dispatch = useAppDispatch()
-    const sandwichIdCountMap = useGetSandwichIdCountMap();
-
-    const token = useAppSelector(state => state.loginState.token);
-    const userId = useAppSelector(state => state.loginState.user._id);
+    const orderItems = useAppSelector(state => state.orderCartState.orderItems);
     const orderPlaceError = useAppSelector(state => state.orderCartState.error)
-    const sandwiches = useGetSandwiches();
+    const products = useAppSelector(state => state.productState.products);
 
-    const itemCount = useItemCount();
-    const orderTotal = useOrderCartTotal();
+
+    const {itemCount, cartAmount} = useOrderCart();
     const toast = useToast();
 
 
@@ -43,19 +41,8 @@ const OrderCart = () => {
 
 
     const handlePlaceOrder = async () => {
-        let orderIds: string[] = [];
-        sandwichIdCountMap.forEach(sandwichIdCount => {
-            for (let i = 0; i < sandwichIdCount.count; i++) {
-                orderIds.push(sandwichIdCount.sandwichId)
-            }
-        })
-        const orderRequest = {
-            userId,
-            status: 'ordered',
-            sandwichIds: [...orderIds],
-            token
-        }
-        dispatch(placeOrder(orderRequest))
+        const order = {orderItems}
+        dispatch(placeOrder(order))
             .then(() => {
             toast({
                 title: `Order placed, Please check view orders for progress`,
@@ -78,16 +65,16 @@ const OrderCart = () => {
 
             <Text fontSize='xl'>
                 Order Cart
-                <Divider orientation='horizontal'/>
             </Text>
 
-            {sandwichIdCountMap.length > 0
+            <Divider orientation='horizontal' borderColor='gray.700'/>
+            {orderItems.length > 0
             &&
                 <Stack spacing='4'>
                     <StatGroup>
                         <Stat>
                             <StatLabel>Order total</StatLabel>
-                            <StatNumber>${orderTotal}</StatNumber>
+                            <StatNumber>${cartAmount}</StatNumber>
                         </Stat>
 
                         <Stat>
@@ -99,34 +86,34 @@ const OrderCart = () => {
                     <Button colorScheme={"teal"}  onClick={handlePlaceOrder} > Confirm Order</Button>
 
                     {
-                        sandwichIdCountMap.map((sandwichIdCount) => {
-                            const selectedSandwich = sandwiches.find(sandwich => sandwich._id === sandwichIdCount.sandwichId)
-                            return {...selectedSandwich, count: sandwichIdCount.count}
+                        orderItems.map((orderItem) => {
+                            const selectedProduct = products.find(product => product._id === orderItem.productId)
+                            return {...selectedProduct, count: orderItem.count}
                         })
-                            .map(selectedSandwichCount => {
+                            .map(currentOrderItem => {
 
                                     return (
                                         <Card
                                             direction={{ base: 'column', sm: 'row' }}
                                             overflow='hidden'
                                             variant='outline'
-                                            key={selectedSandwichCount._id}
+                                            key={currentOrderItem._id}
                                         >
                                             <Image
                                                 objectFit='cover'
                                                 maxW={{ base: '100%', sm: '200px' }}
-                                                src={selectedSandwichCount.imageUrl}
-                                                alt={selectedSandwichCount.name}
+                                                src={currentOrderItem.imageUrl}
+                                                alt={currentOrderItem.name}
                                             />
 
                                             <Stack>
                                                 <CardBody>
-                                                    <Heading size='md'>{selectedSandwichCount.name}</Heading>
+                                                    <Heading size='md'>{currentOrderItem.name}</Heading>
                                                     <Text py='2'>
-                                                        {selectedSandwichCount.description}
+                                                        {currentOrderItem.description}
                                                     </Text>
                                                     <Text py='2'>
-                                                        Subtotal ${selectedSandwichCount.price! * selectedSandwichCount.count}
+                                                        Subtotal ${currentOrderItem.price! * currentOrderItem.count}
                                                     </Text>
 
                                                 </CardBody>
@@ -135,14 +122,14 @@ const OrderCart = () => {
 
 
                                                     <HStack spacing='3'>
-                                                        <Button colorScheme={"red"}   onClick={()=>dispatch(orderCartActions.decrementCount(selectedSandwichCount._id!))} disabled={selectedSandwichCount.count === 0} > - </Button>
-                                                        <Text>{selectedSandwichCount.count}</Text>
-                                                        <Button colorScheme={"green"}   onClick={()=>dispatch(orderCartActions.incrementCount(selectedSandwichCount._id!))}  > + </Button>
+                                                        <Button colorScheme={"red"}   onClick={()=>dispatch(orderCartActions.decrementCount(currentOrderItem._id!))} disabled={currentOrderItem.count === 0} > - </Button>
+                                                        <Text>{currentOrderItem.count}</Text>
+                                                        <Button colorScheme={"green"}   onClick={()=>dispatch(orderCartActions.incrementCount(currentOrderItem._id!))}  > + </Button>
 
                                                         <Button leftIcon={<AiOutlineDelete size={25}/>} colorScheme='red' variant='solid'  onClick={()=>{
-                                                            dispatch(orderCartActions.removeFromCart(selectedSandwichCount._id!))
+                                                            dispatch(orderCartActions.removeFromCart(currentOrderItem._id!))
                                                             toast({
-                                                                title: `${selectedSandwichCount.name} removed from the cart`,
+                                                                title: `${currentOrderItem.name} removed from the cart`,
                                                                 position: 'top-right',
                                                                 isClosable: true,
                                                                 status: 'warning',
@@ -161,12 +148,12 @@ const OrderCart = () => {
                     }
 
                     {
-                        sandwichIdCountMap.length > 2 &&
+                        orderItems.length > 2 &&
                         <>
                             <StatGroup>
                                 <Stat>
                                     <StatLabel>Order total</StatLabel>
-                                    <StatNumber>${orderTotal}</StatNumber>
+                                    <StatNumber>${cartAmount}</StatNumber>
                                 </Stat>
 
                                 <Stat>
@@ -181,10 +168,10 @@ const OrderCart = () => {
             }
 
             {
-                sandwichIdCountMap.length === 0
+                orderItems.length === 0
                 &&
                 <Text fontWeight={"light"}>
-                  There are no products in the cart, Please add from menu :)
+                  There are no products in the cart, Please add from menu or check orders here!
                 </Text>
             }
         </VStack>
